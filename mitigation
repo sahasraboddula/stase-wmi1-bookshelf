@@ -1,0 +1,21 @@
+DELETE_CODE delete_author(char *name) {
+    author *del_author = find_author(name);
+    if (del_author == NULL) return DEL_INVALID_PARAM;
+
+    // Delete all books by this author (uses existing delete_book)
+    while (del_author->books.forward) {
+        book *b = BASE_ADDR(del_author->books.forward, book, au_link);
+        delete_book(b->name);
+    }
+
+    // Delete all reviews authored for any of their books
+    while (del_author->reviews.forward) {
+        review *r = BASE_ADDR(del_author->reviews.forward, review, au_link);
+        link_unlink(&r->au_link);
+        free(r);
+    }
+
+    link_unlink(&del_author->db_link);
+    free_author(del_author);
+    return DEL_SUCCESS;
+}

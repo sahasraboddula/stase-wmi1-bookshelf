@@ -1,0 +1,11 @@
+Error: check_memory_access: memory error
+File: driver_uaf_demo.c
+Line: 134
+assembly.ll line: 109
+State: 2
+Stack: 
+	#000000109 in main() at driver_uaf_demo.c:134
+Info: 
+	address: 135828695154688
+	next: object at 135326183981056 of size 4
+		MO67[4] allocated at main():  %1 = alloca i32, align 4

