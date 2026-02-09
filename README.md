@@ -1,5 +1,5 @@
 # Detecting UAF using KLEE in 2-bookshelf
-**Vulnerability:** WMI-1 (Stale Reference Creation) in the context of 2-bookshelf. This vulnerability is created by deleting an author and freeing the author but not freeing the books that reference them, creates a stale pointer.
+**Vulnerability:** WMI-1 (Stale Reference Creation) in the context of 2-bookshelf. This vulnerability is created by deleting an author and freeing the author but not freeing the books that reference them, creating a stale pointer.
 
 **Steps:**
 ```
@@ -44,3 +44,4 @@ if (bk) {
 ### Explanation of driver file
 Variables relating to the author and the book, such as author name and book name are made symbolic. Duplicate pointers to the book and author are made and the original ones are deleted. 
 Then, we try to access the author through the new book pointer and check using: klee_check_memory_access(bk, sizeof(author)).
+
